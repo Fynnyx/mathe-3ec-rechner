@@ -1,4 +1,4 @@
-from flask import Flask, app, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, flash
 
 app = Flask(__name__)
 def has_infos(sites, angles):
@@ -35,9 +35,10 @@ def home():
 
 @app.route("/form", methods=['POST'])
 def recive_form():
-
-    triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angel_a'], "b": request.form['angel_b'], "c": request.form['angel_c']}}
-
+    print("done")
+    request.form[""]
+    #triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}}
+    print("done")
     if triangle['sites']["a"] != 0:
         print("a!=0")
 
@@ -53,14 +54,7 @@ def recive_form():
     if triangle["angles"]["c"] != 0:
         print("c!=0")
 
-    return redirect(url_for(home))
-
-
-
-
-
-
-
+    return redirect(url_for("home"))
 
 
 triangle["sites"]["a"] = site_a
