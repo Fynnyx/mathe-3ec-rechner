@@ -1,0 +1,15 @@
+input {
+    border-radius: 20px;
+}
+
+button {
+    border-radius: 20px;
+}
+
+#stumpfwinklig {
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid green;                /*höhe*/
+    border-top: 20px solid transparent;
+    display: inline-block;
+}
