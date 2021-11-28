@@ -1,32 +1,21 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
 
 app = Flask(__name__)
-def has_infos(sites, angles):
-    print(sites, angles)
-    sites_amount = len(sites)
-    angle_amount = len(angles)
-    print(sites_amount, angle_amount)
-    if sites_amount == 3 and angle_amount == 3:
-        print("1")
-    elif sites_amount == 2 and angle_amount == 1:
-        print("2")
-    elif sites_amount == 1 and angle_amount == 2:
-        print("3")
-    elif sites_amount == 3 and angle_amount == 0:
-        print("4")
-    else:
-        print("6")
-
-site_a = 13
-site_b = 28
-site_c = 34
-angle_a = 2
-angle_b = 35
-angle_c = 26
-
-
-triangle = {"sites": {"a": 0, "b": 0, "c": 0}, "angles": {"a": 0, "b": 0, "c": 0}}
-
+# def has_infos(sites, angles):
+#     print(sites, angles)
+#     sites_amount = len(sites)
+#     angle_amount = len(angles)
+#     print(sites_amount, angle_amount)
+#     if sites_amount == 3 and angle_amount == 3:
+#         print("1")
+#     elif sites_amount == 2 and angle_amount == 1:
+#         print("2")
+#     elif sites_amount == 1 and angle_amount == 2:
+#         print("3")
+#     elif sites_amount == 3 and angle_amount == 0:
+#         print("4")
+#     else:
+#         print("6")
 
 @app.route("/")
 def home():
@@ -35,37 +24,49 @@ def home():
 
 @app.route("/form", methods=['POST'])
 def recive_form():
-    print("done")
-    request.form[""]
-    #triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}}
-    print("done")
-    if triangle['sites']["a"] != 0:
-        print("a!=0")
+    try:
+        print("done")
+        print(request.form["site_a"])
+        try:
+            global triangle
+            triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}}
+            print(triangle)
+        except:
+            print("Error occured")
 
-    if triangle['sites']["b"] != 0:
-        print("b!=0")
-    if triangle['sites']["c"] != 0:
-        print("c!=0")
+        if triangle['sites']["a"] == "":
+            print("a!=0")
 
-    if triangle["angles"]["a"] != 0:
-        print("a!=0")
-    if triangle["angles"]["b"] != 0:
-        print("b!=0")
-    if triangle["angles"]["c"] != 0:
-        print("c!=0")
+        if triangle['sites']["b"] == "":
+            print("b!=0")
+        if triangle['sites']["c"] == "":
+            print("c!=0")
+
+        if triangle["angles"]["a"] == "":
+            if int(triangle["angles"]["b"]) != 0 and int(triangle["angles"]["c"]) != 0:
+                triangle["angles"]["a"] = calc_angles(int(triangle["angles"]["b"]), int(triangle["angles"]["c"]))
+            else:
+                print("Error occured")
+        if triangle["angles"]["b"] == "":
+            if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["c"]) != 0:
+                triangle["angles"]["b"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["c"]))
+            else:
+                print("Error occured")
+        if triangle["angles"]["c"] == "":
+            if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["b"]) != 0:
+                triangle["angles"]["c"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["b"]))
+            else:
+                print("Error occured")
+    except ValueError:
+        print("Value missing")
 
     return redirect(url_for("home"))
 
 
-triangle["sites"]["a"] = site_a
-triangle["sites"]["b"] = site_b
-triangle["sites"]["c"] = site_c
-
-triangle["angles"]["a"] = angle_a
-triangle["angles"]["b"] = angle_b
-triangle["angles"]["c"] = angle_c
-
-print(triangle)
+def calc_angles(angle1, angle2):
+    angle3 = 180 - (angle1 + angle2)
+    print("angle3: ", angle3)
+    return angle3
 
 if __name__ == "__main__":
     app.run()
