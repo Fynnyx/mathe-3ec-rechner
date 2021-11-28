@@ -1,7 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
+import math
 
 app = Flask(__name__)
-# def has_infos(sites, angles):
+# def has_info(sites, angles):
 #     print(sites, angles)
 #     sites_amount = len(sites)
 #     angle_amount = len(angles)
@@ -29,14 +30,6 @@ def recive_form():
         triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
         print("Got Data: ", triangle)
 
-        if triangle['sites']["a"] == "":
-            print("a!=0")
-
-        if triangle['sites']["b"] == "":
-            print("b!=0")
-        if triangle['sites']["c"] == "":
-            print("c!=0")
-
         if triangle["angles"]["a"] == "":
             if int(triangle["angles"]["b"]) != 0 and int(triangle["angles"]["c"]) != 0:
                 triangle["angles"]["a"] = calc_angles(int(triangle["angles"]["b"]), int(triangle["angles"]["c"]))
@@ -53,6 +46,7 @@ def recive_form():
             else:
                 print("Error occured")
 
+
         # ob das rechteck RECHTWINKLIG ist
         for angle in triangle["angles"]:
             if int(triangle["angles"][angle]) == 90:
@@ -60,17 +54,28 @@ def recive_form():
         # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
         if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
             triangle["properties"]["isosceles"] = True
+
+
+        if triangle['sites']["a"] == "":
+            print("a!=0")
+
+        if triangle['sites']["b"] == "":
+            print("b!=0")
+
+        if triangle['sites']["c"] == "":
+            print("c!=0")
+
+
         # ob das dreich GLEICHSEITIG ist
         if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
             triangle["properties"]["equilateral"] = True
-
 
     except ValueError:
         print("Value missing or not a number")
     finally:
         print(triangle)
 
-    return redirect(url_for("home"))
+    return redirect(url_for("home"), triangle=triangle)
 
 
 def calc_angles(angle1, angle2):
