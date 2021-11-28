@@ -25,14 +25,9 @@ def home():
 @app.route("/form", methods=['POST'])
 def recive_form():
     try:
-        print("done")
-        print(request.form["site_a"])
-        try:
-            global triangle
-            triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
-            print("Got Data: ", triangle)
-        except:
-            print("Error occured")
+        global triangle
+        triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
+        print("Got Data: ", triangle)
 
         if triangle['sites']["a"] == "":
             print("a!=0")
@@ -66,7 +61,7 @@ def recive_form():
         if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
             triangle["properties"]["isosceles"] = True
         # ob das dreich GLEICHSEITIG ist
-        if triangle["angles"]["a"] == triangle["angles"]["b"] == triangle["angles"]["c"]:
+        if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
             triangle["properties"]["equilateral"] = True
 
 
