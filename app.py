@@ -29,8 +29,8 @@ def recive_form():
         print(request.form["site_a"])
         try:
             global triangle
-            triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}}
-            print(triangle)
+            triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
+            print("Got Data: ", triangle)
         except:
             print("Error occured")
 
@@ -57,8 +57,23 @@ def recive_form():
                 triangle["angles"]["c"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["b"]))
             else:
                 print("Error occured")
+
+        # ob das rechteck RECHTWINKLIG ist
+        for angle in triangle["angles"]:
+            if int(triangle["angles"][angle]) == 90:
+                triangle["properties"]["right_angled"] = True
+        # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
+        if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
+            triangle["properties"]["isosceles"] = True
+        # ob das dreich GLEICHSEITIG ist
+        if triangle["angles"]["a"] == triangle["angles"]["b"] == triangle["angles"]["c"]:
+            triangle["properties"]["equilateral"] = True
+
+
     except ValueError:
-        print("Value missing")
+        print("Value missing or not a number")
+    finally:
+        print(triangle)
 
     return redirect(url_for("home"))
 
