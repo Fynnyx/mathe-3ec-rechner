@@ -1,22 +1,37 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
-import math
+from math import sqrt
 
 app = Flask(__name__)
-# def has_info(sites, angles):
-#     print(sites, angles)
-#     sites_amount = len(sites)
-#     angle_amount = len(angles)
-#     print(sites_amount, angle_amount)
-#     if sites_amount == 3 and angle_amount == 3:
-#         print("1")
-#     elif sites_amount == 2 and angle_amount == 1:
-#         print("2")
-#     elif sites_amount == 1 and angle_amount == 2:
-#         print("3")
-#     elif sites_amount == 3 and angle_amount == 0:
-#         print("4")
-#     else:
-#         print("6")
+
+def getAmountEntries(triangle, what:str):
+    amount = 0
+    for x in triangle[what]:
+        if triangle[what][x] != "":
+            amount = amount + 1
+    return amount
+
+
+def getAnglesSSS(sa, sb, sc, triangle):
+    triangle["angles"]["c"] = (sqrt(int(sa)) + sqrt(int(sb)) - sqrt(int(sc)))/(2*(int(sa)*int(sb)))
+    triangle["angles"]["b"] = (sqrt(int(sc)) + sqrt(int(sa)) + sqrt(int(sb)))/(2*(int(sc)*int(sa)))
+    triangle["angles"]["a"] = (sqrt(int(sb)) + sqrt(int(sc)) + sqrt(int(sa)))/(2*(int(sb)*int(sc)))
+    return triangle
+
+def has_info(triangle):
+    sites_amount = getAmountEntries(triangle, "sites")
+    angle_amount = getAmountEntries(triangle, "angles")
+    print(sites_amount, angle_amount)
+    if sites_amount == 3 and angle_amount == 3:
+        return triangle
+    elif sites_amount == 2 and angle_amount == 1:
+        print("2")
+    elif sites_amount == 1 and angle_amount == 2:
+        print("3")
+    elif sites_amount == 3 and angle_amount == 0:
+        triangle = getAnglesSSS(triangle["sites"]["a"], triangle["sites"]["b"], triangle["sites"]["c"], triangle)
+    else:
+        print("6")
+    return triangle
 
 @app.route("/")
 def home():
@@ -30,21 +45,23 @@ def recive_form():
         triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
         print("Got Data: ", triangle)
 
-        if triangle["angles"]["a"] == "":
-            if int(triangle["angles"]["b"]) != 0 and int(triangle["angles"]["c"]) != 0:
-                triangle["angles"]["a"] = calc_angles(int(triangle["angles"]["b"]), int(triangle["angles"]["c"]))
-            else:
-                print("Error occured")
-        if triangle["angles"]["b"] == "":
-            if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["c"]) != 0:
-                triangle["angles"]["b"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["c"]))
-            else:
-                print("Error occured")
-        if triangle["angles"]["c"] == "":
-            if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["b"]) != 0:
-                triangle["angles"]["c"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["b"]))
-            else:
-                print("Error occured")
+        triangle = has_info(triangle)
+
+        # if triangle["angles"]["a"] == "":
+        #     if int(triangle["angles"]["b"]) != 0 and int(triangle["angles"]["c"]) != 0:
+        #         triangle["angles"]["a"] = calc_angles(int(triangle["angles"]["b"]), int(triangle["angles"]["c"]))
+        #     else:
+        #         print("Error occured")
+        # if triangle["angles"]["b"] == "":
+        #     if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["c"]) != 0:
+        #         triangle["angles"]["b"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["c"]))
+        #     else:
+        #         print("Error occured")
+        # if triangle["angles"]["c"] == "":
+        #     if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["b"]) != 0:
+        #         triangle["angles"]["c"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["b"]))
+        #     else:
+        #         print("Error occured")
 
 
         # ob das rechteck RECHTWINKLIG ist
@@ -56,14 +73,14 @@ def recive_form():
             triangle["properties"]["isosceles"] = True
 
 
-        if triangle['sites']["a"] == "":
-            print("a!=0")
-
-        if triangle['sites']["b"] == "":
-            print("b!=0")
-
-        if triangle['sites']["c"] == "":
-            print("c!=0")
+        # if triangle['sites']["a"] == "":
+        #     print("a!=0")
+        #
+        # if triangle['sites']["b"] == "":
+        #     print("b!=0")
+        #
+        # if triangle['sites']["c"] == "":
+        #     print("c!=0")
 
 
         # ob das dreich GLEICHSEITIG ist
@@ -75,7 +92,7 @@ def recive_form():
     finally:
         print(triangle)
 
-    return redirect(url_for("home"), triangle=triangle)
+    return redirect(url_for("home"))
 
 
 def calc_angles(angle1, angle2):
