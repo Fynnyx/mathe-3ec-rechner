@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
-from math import sqrt
+from math import sqrt, cos
 
 app = Flask(__name__)
 
@@ -10,11 +10,22 @@ def getAmountEntries(triangle, what:str):
             amount = amount + 1
     return amount
 
+def getTriangleSAA(triangle):
+    if triangle["angles"]["a"] == "":
+        triangle["angles"]["a"] = 180 - (int(triangle["angles"]["b"] + int(triangle["angles"]["c"])))
+    elif triangle["angles"]["b"] == "":
+        triangle["angles"]["b"] = 180 - (int(triangle["angles"]["a"] + int(triangle["angles"]["c"])))
+    elif triangle["angles"]["c"] == "":
+        triangle["angles"]["c"] = 180 - (int(triangle["angles"]["a"] + int(triangle["angles"]["b"])))
 
-def getAnglesSSS(sa, sb, sc, triangle):
-    triangle["angles"]["c"] = (sqrt(int(sa)) + sqrt(int(sb)) - sqrt(int(sc)))/(2*(int(sa)*int(sb)))
-    triangle["angles"]["b"] = (sqrt(int(sc)) + sqrt(int(sa)) + sqrt(int(sb)))/(2*(int(sc)*int(sa)))
-    triangle["angles"]["a"] = (sqrt(int(sb)) + sqrt(int(sc)) + sqrt(int(sa)))/(2*(int(sb)*int(sc)))
+    print(triangle)
+
+
+
+def getTriangleSSS(sa, sb, sc, triangle):
+    triangle["angles"]["c"] = cos((sqrt(int(sa)) + sqrt(int(sb)) - sqrt(int(sc)))/(2*(int(sa)*int(sb))))
+    triangle["angles"]["b"] = cos((sqrt(int(sc)) + sqrt(int(sa)) + sqrt(int(sb)))/(2*(int(sc)*int(sa))))
+    triangle["angles"]["a"] = cos((sqrt(int(sb)) + sqrt(int(sc)) + sqrt(int(sa)))/(2*(int(sb)*int(sc))))
     return triangle
 
 def has_info(triangle):
@@ -26,9 +37,9 @@ def has_info(triangle):
     elif sites_amount == 2 and angle_amount == 1:
         print("2")
     elif sites_amount == 1 and angle_amount == 2:
-        print("3")
+        triangle = getTriangleSAA(triangle)
     elif sites_amount == 3 and angle_amount == 0:
-        triangle = getAnglesSSS(triangle["sites"]["a"], triangle["sites"]["b"], triangle["sites"]["c"], triangle)
+        triangle = getTriangleSSS(triangle["sites"]["a"], triangle["sites"]["b"], triangle["sites"]["c"], triangle)
     else:
         print("6")
     return triangle
