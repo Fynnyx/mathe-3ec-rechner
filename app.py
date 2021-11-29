@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
 from math import sqrt, cos
 
+
 app = Flask(__name__)
 
 def getAmountEntries(triangle, what:str):
@@ -45,8 +46,11 @@ def has_info(triangle):
     return triangle
 
 @app.route("/")
-def home():
-    return render_template("html/index.html")
+def home(site_a = "", site_b = "", site_c = "", angle_a = "", angle_b = "", angle_c = "", right_angled = False, isosceles =  False, equilateral = False, height = "", area = "" ):
+    print(angle_a)
+
+    return render_template("html/index.html", site_a = site_a, site_b = site_b, site_c = site_c, angle_a = angle_a, angle_b = angle_b, angle_c = angle_c, area = area)
+
 
 
 @app.route("/form", methods=['POST'])
@@ -102,8 +106,16 @@ def recive_form():
         print("Value missing or not a number")
     finally:
         print(triangle)
+        print(triangle["angles"]["a"])
 
-    return redirect(url_for("home"))
+    print(triangle["angles"]["a"])
+    return render_template("./html/index.html", site_a = triangle["sites"]["a"],
+                    site_b=triangle["sites"]["b"],
+                    site_c=triangle["sites"]["c"],
+                    angle_a=triangle["angles"]["a"],
+                    angle_b=triangle["angles"]["b"],
+                    angle_c=triangle["angles"]["c"],
+                    )
 
 
 def calc_angles(angle1, angle2):
