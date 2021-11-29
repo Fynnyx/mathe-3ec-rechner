@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
-from math import sqrt, cos
+from math import sqrt, acos, cos, pi
 
 
 app = Flask(__name__)
@@ -11,22 +11,30 @@ def getAmountEntries(triangle, what:str):
             amount = amount + 1
     return amount
 
+def getTriagnleSSA(triangle):
+    print(triangle)
+    return triangle
+#     Ist es der eingeschlossener winkel => cosinus satz benutzen. => SSS
+#     ist es nicht der eingeschlossene Winkel => sinus satz => mit evtl. weiterer winkel mit 2 Lösungen.
+
 def getTriangleSAA(triangle):
     if triangle["angles"]["a"] == "":
-        triangle["angles"]["a"] = 180 - (int(triangle["angles"]["b"] + int(triangle["angles"]["c"])))
+        triangle["angles"]["a"] = 180 - (float(triangle["angles"]["b"] + float(triangle["angles"]["c"])))
     elif triangle["angles"]["b"] == "":
-        triangle["angles"]["b"] = 180 - (int(triangle["angles"]["a"] + int(triangle["angles"]["c"])))
+        triangle["angles"]["b"] = 180 - (float(triangle["angles"]["a"] + float(triangle["angles"]["c"])))
     elif triangle["angles"]["c"] == "":
-        triangle["angles"]["c"] = 180 - (int(triangle["angles"]["a"] + int(triangle["angles"]["b"])))
+        triangle["angles"]["c"] = 180 - (float(triangle["angles"]["a"] + float(triangle["angles"]["b"])))
+
+    # mit sinus satz die letzten seiten berechnen
 
     print(triangle)
 
 
 
 def getTriangleSSS(sa, sb, sc, triangle):
-    triangle["angles"]["c"] = cos((sqrt(int(sa)) + sqrt(int(sb)) - sqrt(int(sc)))/(2*(int(sa)*int(sb))))
-    triangle["angles"]["b"] = cos((sqrt(int(sc)) + sqrt(int(sa)) + sqrt(int(sb)))/(2*(int(sc)*int(sa))))
-    triangle["angles"]["a"] = cos((sqrt(int(sb)) + sqrt(int(sc)) + sqrt(int(sa)))/(2*(int(sb)*int(sc))))
+    triangle["angles"]["c"] = round((acos((float(sa)**2 + float(sb)**2 - float(sc)**2) / (2 * float(sa) * float(sb)))) / pi * 180, 2)
+    triangle["angles"]["b"] = round((acos((float(sc)**2 + float(sa)**2 - float(sb)**2) / (2 * float(sc) * float(sa)))) / pi * 180, 2)
+    triangle["angles"]["a"] = round((acos((float(sb)**2 + float(sc)**2 - float(sa)**2) / (2 * float(sb) * float(sc)))) / pi * 180, 2)
     return triangle
 
 def has_info(triangle):
@@ -47,11 +55,7 @@ def has_info(triangle):
 
 @app.route("/")
 def home(site_a = "", site_b = "", site_c = "", angle_a = "", angle_b = "", angle_c = "", right_angled = False, isosceles =  False, equilateral = False, height = "", area = "" ):
-    print(angle_a)
-
     return render_template("html/index.html", site_a = site_a, site_b = site_b, site_c = site_c, angle_a = angle_a, angle_b = angle_b, angle_c = angle_c, area = area)
-
-
 
 @app.route("/form", methods=['POST'])
 def recive_form():
@@ -62,41 +66,13 @@ def recive_form():
 
         triangle = has_info(triangle)
 
-        # if triangle["angles"]["a"] == "":
-        #     if int(triangle["angles"]["b"]) != 0 and int(triangle["angles"]["c"]) != 0:
-        #         triangle["angles"]["a"] = calc_angles(int(triangle["angles"]["b"]), int(triangle["angles"]["c"]))
-        #     else:
-        #         print("Error occured")
-        # if triangle["angles"]["b"] == "":
-        #     if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["c"]) != 0:
-        #         triangle["angles"]["b"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["c"]))
-        #     else:
-        #         print("Error occured")
-        # if triangle["angles"]["c"] == "":
-        #     if int(triangle["angles"]["a"]) != 0 and int(triangle["angles"]["b"]) != 0:
-        #         triangle["angles"]["c"] = calc_angles(int(triangle["angles"]["a"]), int(triangle["angles"]["b"]))
-        #     else:
-        #         print("Error occured")
-
-
         # ob das rechteck RECHTWINKLIG ist
         for angle in triangle["angles"]:
-            if int(triangle["angles"][angle]) == 90:
+            if float(triangle["angles"][angle]) == 90:
                 triangle["properties"]["right_angled"] = True
         # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
         if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
             triangle["properties"]["isosceles"] = True
-
-
-        # if triangle['sites']["a"] == "":
-        #     print("a!=0")
-        #
-        # if triangle['sites']["b"] == "":
-        #     print("b!=0")
-        #
-        # if triangle['sites']["c"] == "":
-        #     print("c!=0")
-
 
         # ob das dreich GLEICHSEITIG ist
         if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
@@ -106,7 +82,6 @@ def recive_form():
         print("Value missing or not a number")
     finally:
         print(triangle)
-        print(triangle["angles"]["a"])
 
     print(triangle["angles"]["a"])
     return render_template("./html/index.html", site_a = triangle["sites"]["a"],
