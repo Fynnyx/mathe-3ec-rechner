@@ -1,16 +1,16 @@
 #gleichseitig {
-    border-left: 300px solid transparent;
-    border-right: 300px solid transparent;
-    border-bottom: calc(2 * 300px * 0.866) solid green;
-    border-top: 300px solid transparent;
+    border-left: 400px solid transparent;
+    border-right: 400px solid transparent;
+    border-bottom: calc(2 * 400px * 0.866) solid green;
+    border-top: 400px solid transparent;
     display: inline-block;
 }
 
 #stumpfwinklig {
-    border-left: 300px solid transparent;
-    border-right: 300px solid transparent;
-    border-bottom: 300px solid green;                /*höhe*/
-    border-top: 300px solid transparent;
+    border-left: 400px solid transparent;
+    border-right: 400px solid transparent;
+    border-bottom: 400px solid green;                /*höhe*/
+    border-top: 400px solid transparent;
     display: inline-block;
 }
 
@@ -23,7 +23,7 @@
 }
 
 #rechtwinklig {
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     background: linear-gradient(to bottom right, #fff 0%, #fff 50%, green 50%, green 100%);
 }
