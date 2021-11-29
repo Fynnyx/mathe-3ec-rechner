@@ -115,6 +115,11 @@ def recive_form():
                     angle_a=triangle["angles"]["a"],
                     angle_b=triangle["angles"]["b"],
                     angle_c=triangle["angles"]["c"],
+                    rectangle = triangle["properties"]["right_angled"],
+                    isosceles = triangle["properties"]["isosceles"],
+                    equilateral = triangle["properties"]["equilateral"],
+                    height = triangle["properties"]["height"],
+                    area = triangle["properties"]["area"]
                     )
 
 
