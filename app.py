@@ -37,10 +37,11 @@ def getTriangleSSA(triangle):
 
     if triangle["sites"]["a"] != "" and triangle["sites"]["b"] != "" and triangle["angles"]["a"] != "":
         triangle["angles"]["b"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["b"])) / float(triangle["sites"]["a"]))),2)
+        triangle["angles"]["c"] = 180 - (float(triangle["angles"]["b"]) + float(triangle["angles"]["a"]))
 
     if triangle["sites"]["a"] != "" and triangle["sites"]["b"] != "" and triangle["angles"]["b"] != "":
         triangle["angles"]["a"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["a"])) / float(triangle["sites"]["b"]))),2)
-
+        triangle["angles"]["c"] = 180 - (float(triangle["angles"]["b"]) + float(triangle["angles"]["a"]))
 
     if triangle["sites"]["a"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["a"] != "":
         triangle["angles"]["a"] = round(getDegreesFromRadian(asin(
