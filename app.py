@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
-from math import sqrt, acos, cos, pi
+from math import acos, cos, sin, asin, pi
 
 
 app = Flask(__name__)
@@ -11,24 +11,46 @@ def getAmountEntries(triangle, what:str):
             amount = amount + 1
     return amount
 
+# def isMiddleAngle(triangle):
+
+
 def getTriagnleSSA(triangle):
     print(triangle)
+
+    if triangle["sites"]["a"] != "" and triangle["sites"]["b"] != "" and triangle["angles"]["c"] != "":
+        print(triangle)
+    elif triangle["sites"]["a"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["b"] != "":
+        print(triangle)
+    elif triangle["sites"]["b"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["a"] != "":
+        print(triangle)
     return triangle
+
+    # if isMiddleAngle(triangle):
+
 #     Ist es der eingeschlossener winkel => cosinus satz benutzen. => SSS
 #     ist es nicht der eingeschlossene Winkel => sinus satz => mit evtl. weiterer winkel mit 2 Lösungen.
 
 def getTriangleSAA(triangle):
     if triangle["angles"]["a"] == "":
-        triangle["angles"]["a"] = 180 - (float(triangle["angles"]["b"] + float(triangle["angles"]["c"])))
+        triangle["angles"]["a"] = 180 - (float(triangle["angles"]["b"]) + float(triangle["angles"]["c"]))
     elif triangle["angles"]["b"] == "":
-        triangle["angles"]["b"] = 180 - (float(triangle["angles"]["a"] + float(triangle["angles"]["c"])))
+        triangle["angles"]["b"] = 180 - (float(triangle["angles"]["a"]) + float(triangle["angles"]["c"]))
     elif triangle["angles"]["c"] == "":
-        triangle["angles"]["c"] = 180 - (float(triangle["angles"]["a"] + float(triangle["angles"]["b"])))
+        triangle["angles"]["c"] = 180 - (float(triangle["angles"]["a"]) + float(triangle["angles"]["b"]))
 
-    # mit sinus satz die letzten seiten berechnen
 
-    print(triangle)
+    if triangle["sites"]["a"] != "":
+        triangle["sites"]["c"] =  round(((sin(float(triangle["angles"]["a"])) * float(triangle["sites"]["a"])) / sin(float(triangle["angles"]["c"]))) / pi * 180, 2)
+        triangle["sites"]["b"] =  round(((sin(float(triangle["angles"]["a"])) * float(triangle["sites"]["a"])) / sin(float(triangle["angles"]["b"]))) / pi * 180, 2)
 
+    elif triangle["sites"]["b"] != "":
+        triangle["sites"]["a"] =  round(((sin(float(triangle["angles"]["b"])) * float(triangle["sites"]["b"])) / sin(float(triangle["angles"]["a"]))) / pi * 180, 2)
+        triangle["sites"]["c"] =  round(((sin(float(triangle["angles"]["b"])) * float(triangle["sites"]["b"])) / sin(float(triangle["angles"]["c"]))) / pi * 180, 2)
+
+    elif triangle["sites"]["c"] != "":
+        triangle["sites"]["b"] =  round(((sin(float(triangle["angles"]["c"])) * float(triangle["sites"]["c"])) / sin(float(triangle["angles"]["b"]))) / pi * 180, 2)
+        triangle["sites"]["a"] =  round(((sin(float(triangle["angles"]["c"])) * float(triangle["sites"]["c"])) / sin(float(triangle["angles"]["a"]))) / pi * 180, 2)
+    return triangle
 
 
 def getTriangleSSS(sa, sb, sc, triangle):
@@ -83,7 +105,6 @@ def recive_form():
     finally:
         print(triangle)
 
-    print(triangle["angles"]["a"])
     return render_template("./html/index.html", site_a = triangle["sites"]["a"],
                     site_b=triangle["sites"]["b"],
                     site_c=triangle["sites"]["c"],
