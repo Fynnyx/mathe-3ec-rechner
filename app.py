@@ -72,7 +72,6 @@ def getTriangleSSA(triangle):
     return triangle
 
 
-
 def getTriangleSAA(triangle):
     if triangle["angles"]["a"] == "":
         triangle["angles"]["a"] = 180 - (float(triangle["angles"]["b"]) + float(triangle["angles"]["c"]))
@@ -127,30 +126,30 @@ def home(site_a = "", site_b = "", site_c = "", angle_a = "", angle_b = "", angl
 
 @app.route("/form", methods=['POST'])
 def recive_form():
-    # try:
-    global triangle
-    triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
-    print("Got Data: ", triangle)
-    triangle = has_info(triangle)
+    try:
+        global triangle
+        triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
+        print("Got Data: ", triangle)
+        triangle = has_info(triangle)
 
 
-    # ob das rechteck RECHTWINKLIG ist
-    for angle in triangle["angles"]:
-        if float(triangle["angles"][angle]) == 90:
-            triangle["properties"]["right_angled"] = True
+        # ob das rechteck RECHTWINKLIG ist
+        for angle in triangle["angles"]:
+            if float(triangle["angles"][angle]) == 90:
+                triangle["properties"]["right_angled"] = True
 
-    # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
-    if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
-        triangle["properties"]["isosceles"] = True
+        # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
+        if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
+            triangle["properties"]["isosceles"] = True
 
-    # ob das dreich GLEICHSEITIG ist
-    if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
-        triangle["properties"]["equilateral"] = True
-    # except ValueError as e:
-    #     print("Value missing or not a number")
-        # print("Error: ", e)
-    # finally:
-    #     print(triangle)
+        # ob das dreich GLEICHSEITIG ist
+        if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
+            triangle["properties"]["equilateral"] = True
+    except ValueError as e:
+        print("Value missing or not a number")
+        print("Error: ", e)
+    finally:
+        print(triangle)
 
     return render_template("./html/index.html", site_a = triangle["sites"]["a"],
                     site_b=triangle["sites"]["b"],
