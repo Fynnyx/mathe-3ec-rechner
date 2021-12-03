@@ -16,11 +16,9 @@ button {
     z-index: 1;
 }
 
-#output2 {
-    border: 1px solid black;
-    border-radius: 25px;
-    list-style-type: none;
-    text-align: center;
+p {
+    font-size: 20px;
+font-weight: bold;
 }
 
 /*Design für gleichseitiges Dreieck*/
