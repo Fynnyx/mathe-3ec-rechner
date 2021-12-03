@@ -190,6 +190,7 @@ def getTriangleSSS(sa, sb, sc, triangle):
         # Return Error
         print("Keine Lösung")
 
+
 def has_info(triangle):
     sites_amount = getAmountEntries(triangle, "sites")
     angle_amount = getAmountEntries(triangle, "angles")
@@ -206,6 +207,7 @@ def has_info(triangle):
         print("6")
     return triangle
 
+
 @app.route("/")
 def home(site_a = "", site_b = "", site_c = "", angle_a = "", angle_b = "", angle_c = "", right_angled = False, isosceles =  False, equilateral = False, height = "", area = "" ):
     return render_template("html/index.html", site_a = site_a, site_b = site_b, site_c = site_c, angle_a = angle_a, angle_b = angle_b, angle_c = angle_c, area = area)
@@ -220,11 +222,12 @@ def recive_form():
     if checkForNegatives(triangle) != True or checkForAnglesMore180(triangle["angles"]) != True :
 
         triangle = has_info(triangle)
-        #
-        # # ob das rechteck RECHTWINKLIG ist
-        # for angle in triangle["angles"]:
-        #     if float(triangle["angles"][angle]) == 90:
-        #         triangle["properties"]["right_angled"] = True
+
+        # ob das rechteck RECHTWINKLIG ist
+        for angle in triangle["angles"]:
+            if "/" in str(triangle["angles"][angle]):
+                if float(triangle["angles"][angle]) == 90:
+                    triangle["properties"]["right_angled"] = True
         #
         # # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
         # if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
