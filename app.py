@@ -115,6 +115,9 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["sites"]["b"] = str(triangle["sites"]["b"]) + " oder " + str(siteb)
+            else:
+                # Return Error
+                print("not Possible")
 
     elif triangle["sites"]["b"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["b"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"]) / float(triangle["sites"]["b"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"])/ float(triangle["sites"]["b"]) <= 1:
@@ -128,6 +131,9 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["c"] = str(triangle["angles"]["c"]) + " oder " + str(anglec)
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["sites"]["a"] = str(triangle["sites"]["a"]) + " oder " + str(sitea)
+            else:
+                # Return Error
+                print("not Possible")
 
     elif triangle["sites"]["b"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["c"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"]) / float(triangle["sites"]["c"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"])/ float(triangle["sites"]["c"]) <= 1:
@@ -141,6 +147,9 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["sites"]["a"] = str(triangle["sites"]["a"]) + " oder " + str(sitea)
+            else:
+                # Return Error
+                print("not Possible")
     return triangle
 
 
