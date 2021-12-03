@@ -23,48 +23,45 @@
     <form action="{{ url_for('recive_form') }}" method='POST'>
 
         <div class="container">
+
+            <!--Zeile für Ausgabefelder-->
             <div class="row">
+                <div class="col-sm-2"></div>
 
-                    <div class="col-sm-2"></div>
+                <!--Den benutzten von equilateral, obtuse-angled, acute-angled oder right_angled abfüllen-->
+                <div class="col-sm-3 text-left">
+                    <p id="equilateral"></p>
+                    <p id="obtuse-angled"></p>
+                    <p id="acute-angled"></p>
+                    <p id="right_angled"></p>
+                </div>
 
-                    <div class="col-sm-3 text-left">
-                        <p id="equilateral"></p>
-                        <p id="obtuse-angled"></p>
-                        <p id="acute-angled"></p>
-                        <p id="right_angled"></p>
-                    </div>
+                <div class="col-sm-3 text-left">
+                    <p id="height"></p>
+                </div>
 
-                    <div class="col-sm-3 text-left">
-                        <p id="height"></p>
-                    </div>
-
-                    <div class="col-sm-3 text-left">
-                        <p id="area"></p>
-                    </div>
-
+                <div class="col-sm-3 text-left">
+                    <p id="area"></p>
+                </div>
             </div>
 
+            <!--Zeile für Input und Output von Winkel C-->
             <div class="row">
                 <div class="col-sm-5"></div>
 
                 <div class="col-sm-4">
                     <input value="{{ angle_c }}" type="text" id="angle_c" name="angle_c" placeholder="Winkel C"><br>
                 </div>
-
-                <div class="col-sm-3">
-
-                    <!--Den benutzten von equilateral, obtuse-angled, acute-angled oder right_angled abfüllen-->
-
-                </div>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
 
+            <!--Zeile für Input und Output von Seite A und B sowie die Ausgabe des Dreiecks-->
             <div class="row">
                 <div class="col-sm-2"></div>
 
                 <div class="col-sm-2">
-                    <input value="{{ site_a }}" type="text" name="site_a" placeholder="Seite a"><br>
+                    <input value="{{ site_b }}" type="text" id="site_b" name="site_b" placeholder="Seite b"><br>
                 </div>
 
                 <div class="col-sm-4">
@@ -77,14 +74,14 @@
                 </div>
 
                 <div class="col-sm-3">
-                    <input value="{{ site_b }}" type="text" id="site_b" name="site_b" placeholder="Seite b"><br>
+                    <input value="{{ site_a }}" type="text" name="site_a" placeholder="Seite a"><br>
                 </div>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
 
+            <!--Zeile für Input und Output von Winkel A, Winkel B und Seite C-->
             <div class="row">
-
                 <div class="col-sm-5">
                     <input value="{{ angle_b }}" type="text" id="angle_b" name="angle_b" placeholder="Winkel B"><br>
                 </div>
@@ -100,6 +97,7 @@
 
             <br />
 
+            <!--Rechnen und Reset Button-->
             <div class="row">
                 <div class="col-sm-12">
                     <button type="submit">rechen</button>
@@ -107,8 +105,8 @@
                 </div>
             </div>
 
-
         </div>
+
     </form>
     <br />
 

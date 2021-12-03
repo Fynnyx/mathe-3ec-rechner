@@ -1,21 +1,32 @@
+/*Design für Inputs*/
 input {
     border-radius: 20px;
 }
 
+/*Design für Buttons*/
 button {
     border-radius: 20px;
 }
 
+/*Design für a*/
 a {
     color: inherit;
     text-decoration: inherit;
 }
 
+/*Design für a:hover (z.B. mit Maus über Link wischen)*/
 a:hover {
     text-decoration: none;
     color: inherit;
 }
 
+/*Design für Paragraph(<p>)*/
+p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/*Design für Output*/
 #output {
     text-align: center;
     position: absolute;
@@ -26,23 +37,16 @@ a:hover {
     z-index: 1;
 }
 
-p {
-    font-size: 20px;
-    font-weight: bold;
-}
-
 /*Design für gleichseitiges Dreieck*/
 #gleichseitig {
     z-index: -1;
     position: absolute;
-    /* transform: translateX(-50%); */
     transform: translateY(-50%);
     top: 50%;
     left: 14%; 
     border-left: 150px solid transparent;
     border-right: 150px solid transparent;
     border-bottom: calc(2 * 150px * 0.866) solid green;
-    /* display: inline-block; */
 }
 
 /*Design für stumpfwinkliges Dreieck*/
