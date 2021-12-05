@@ -10,14 +10,14 @@ button {
 
 /*Design für a*/
 a {
-    color: inherit;
+    color: black;
     text-decoration: inherit;
 }
 
 /*Design für a:hover (z.B. mit Maus über Link wischen)*/
 a:hover {
     text-decoration: none;
-    color: inherit;
+    color: black;
 }
 
 /*Design für Paragraph(<p>)*/
