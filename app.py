@@ -63,7 +63,7 @@ def getTriangleSSA(triangle):
             if float(triangle["angles"]["a"]) < 90 and float(triangle["sites"]["a"]) < float(triangle["sites"]["b"]):
                 angleb = round(180 - float(triangle["angles"]["b"]), ROUND_INDICATOR)
                 anglec = round(180 - (angleb + float["angles"]["a"]), ROUND_INDICATOR)
-                sitec = round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(anglec), ROUND_INDICATOR)
+                sitec = round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(anglec)), ROUND_INDICATOR)
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["angles"]["c"] = str(triangle["angles"]["c"]) + " oder " + str(anglec)
                 triangle["sites"]["c"] = str(triangle["sites"]["c"]) +  " oder " + str(sitec)
@@ -79,7 +79,7 @@ def getTriangleSSA(triangle):
             if float(triangle["angles"]["b"]) < 90 and float(triangle["sites"]["b"]) < float(triangle["sites"]["a"]):
                 anglea = round(180 - float(triangle["angles"]["a"]), ROUND_INDICATOR)
                 anglec = round(180 - (anglea + float(triangle["angles"]["b"])), ROUND_INDICATOR)
-                sitec = round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["b"])) * sin(anglec), ROUND_INDICATOR)
+                sitec = round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * sin(getRadianFromDegrees(anglec)), ROUND_INDICATOR)
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["angles"]["c"] = str(triangle["angles"]["c"]) + " oder " + str(anglec)
                 triangle["sites"]["c"] = str(triangle["sites"]["c"]) + " oder " + str(sitec)
@@ -95,7 +95,7 @@ def getTriangleSSA(triangle):
             if float(triangle["angles"]["a"]) < 90 and float(triangle["sites"]["a"]) < float(triangle["sites"]["c"]):
                 anglec = round(180 - float(triangle["angles"]["c"]), ROUND_INDICATOR)
                 angleb = round(180 - (anglec + float(triangle["angles"]["a"])), ROUND_INDICATOR)
-                siteb = round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(angleb), ROUND_INDICATOR)
+                siteb = round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(angleb)), ROUND_INDICATOR)
                 triangle["angles"]["c"] = str(triangle["angles"]["c"]) + " oder " + str(anglec)
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["sites"]["b"] = str(triangle["sites"]["b"]) + " oder " + str(siteb)
@@ -111,13 +111,13 @@ def getTriangleSSA(triangle):
             if float(triangle["angles"]["c"]) < 90 and float(triangle["sites"]["c"]) < float(triangle["sites"]["a"]):
                 anglea = round(180 - float(triangle["angles"]["a"]), ROUND_INDICATOR)
                 angleb = round(180 - (anglea + float(triangle["angles"]["c"])), ROUND_INDICATOR)
-                siteb = round(float(triangle["sites"]["c"]) / sin(float(triangle["angles"]["c"])) * sin(angleb), ROUND_INDICATOR)
+                siteb = round(float(triangle["sites"]["c"]) / sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * sin(getRadianFromDegrees(angleb)), ROUND_INDICATOR)
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["sites"]["b"] = str(triangle["sites"]["b"]) + " oder " + str(siteb)
-            else:
-                # Return Error
-                print("not Possible")
+        else:
+            # Return Error
+            print("not Possible")
 
     elif triangle["sites"]["b"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["b"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"]) / float(triangle["sites"]["b"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"])/ float(triangle["sites"]["b"]) <= 1:
@@ -127,13 +127,13 @@ def getTriangleSSA(triangle):
             if float(triangle["angles"]["b"]) < 90 and float(triangle["sites"]["b"]) < float(triangle["sites"]["c"]):
                 anglec = round(180 - float(triangle["angles"]["c"]), ROUND_INDICATOR)
                 anglea = round(180 - (anglec + float(triangle["angles"]["b"])), ROUND_INDICATOR)
-                sitea = round(float(triangle["sites"]["b"]) / sin(float(triangle["angles"]["b"])) * sin(anglea), ROUND_INDICATOR)
+                sitea = round(float(triangle["sites"]["b"]) / sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * sin(getRadianFromDegrees(anglea)), ROUND_INDICATOR)
                 triangle["angles"]["c"] = str(triangle["angles"]["c"]) + " oder " + str(anglec)
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["sites"]["a"] = str(triangle["sites"]["a"]) + " oder " + str(sitea)
-            else:
-                # Return Error
-                print("not Possible")
+        else:
+            # Return Error
+            print("not Possible")
 
     elif triangle["sites"]["b"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["c"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"]) / float(triangle["sites"]["c"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"])/ float(triangle["sites"]["c"]) <= 1:
@@ -143,13 +143,13 @@ def getTriangleSSA(triangle):
             if float(triangle["angles"]["c"]) < 90 and float(triangle["sites"]["c"]) < float(triangle["sites"]["b"]):
                 angleb = round(180 - float(triangle["angles"]["b"]), ROUND_INDICATOR)
                 anglea = round(180 - (angleb + float(triangle["angles"]["c"])), ROUND_INDICATOR)
-                sitea = round(float(triangle["sites"]["c"]) / sin(float(triangle["angles"]["c"])) * sin(anglea), ROUND_INDICATOR)
+                sitea = round(float(triangle["sites"]["c"]) / sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * sin(getRadianFromDegrees(anglea)), ROUND_INDICATOR)
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["sites"]["a"] = str(triangle["sites"]["a"]) + " oder " + str(sitea)
-            else:
-                # Return Error
-                print("not Possible")
+        else:
+            # Return Error
+            print("not Possible")
     return triangle
 
 
@@ -163,16 +163,16 @@ def getTriangleSAA(triangle):
 
 
     if triangle["sites"]["a"] != "":
-        triangle["sites"]["c"] =  round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(float(triangle["angles"]["c"])), ROUND_INDICATOR)
-        triangle["sites"]["b"] =  round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(float(triangle["angles"]["b"])), ROUND_INDICATOR)
+        triangle["sites"]["c"] =  round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["c"]))), ROUND_INDICATOR)
+        triangle["sites"]["b"] =  round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["b"]))), ROUND_INDICATOR)
 
     elif triangle["sites"]["b"] != "":
-        triangle["sites"]["a"] = round(float(triangle["sites"]["b"]) / sin(float(triangle["angles"]["b"])) * sin(float(triangle["angles"]["a"])), ROUND_INDICATOR)
-        triangle["sites"]["c"] = round(float(triangle["sites"]["b"]) / sin(float(triangle["angles"]["b"])) * sin(float(triangle["angles"]["c"])), ROUND_INDICATOR)
+        triangle["sites"]["a"] = round(float(triangle["sites"]["b"]) / sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["a"]))), ROUND_INDICATOR)
+        triangle["sites"]["c"] = round(float(triangle["sites"]["b"]) / sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["c"]))), ROUND_INDICATOR)
 
     elif triangle["sites"]["c"] != "":
-        triangle["sites"]["a"] = round(float(triangle["sites"]["c"]) / sin(float(triangle["angles"]["c"])) * sin(float(triangle["angles"]["a"])), ROUND_INDICATOR)
-        triangle["sites"]["b"] = round(float(triangle["sites"]["c"]) / sin(float(triangle["angles"]["c"])) * sin(float(triangle["angles"]["b"])), ROUND_INDICATOR)
+        triangle["sites"]["a"] = round(float(triangle["sites"]["c"]) / sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["a"]))), ROUND_INDICATOR)
+        triangle["sites"]["b"] = round(float(triangle["sites"]["c"]) / sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["b"]))), ROUND_INDICATOR)
     return triangle
 
 
@@ -224,10 +224,17 @@ def recive_form():
         triangle = has_info(triangle)
 
         # ob das rechteck RECHTWINKLIG ist
+        print(triangle)
         for angle in triangle["angles"]:
-            if "/" in str(triangle["angles"][angle]):
-                if float(triangle["angles"][angle]) == 90:
+            if " oder " in str(triangle["angles"][angle]):
+                angle_var = triangle["angles"][angle].split(" oder ")
+            else:
+                angle_var = [triangle["angles"][angle]]
+            for a in angle_var:
+                if float(a) == 90:
                     triangle["properties"]["right_angled"] = True
+
+        print(triangle)
         #
         # # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
         # if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
