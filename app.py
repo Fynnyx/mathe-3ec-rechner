@@ -55,11 +55,11 @@ def getTriangleSSA(triangle):
         triangle = getTriangleSSS(triangle["sites"]["a"], triangle["sites"]["b"], triangle["sites"]["c"], triangle)
 
 
-    if triangle["sites"]["a"] != "" and triangle["sites"]["b"] != "" and triangle["angles"]["a"] != "":
+    elif triangle["sites"]["a"] != "" and triangle["sites"]["b"] != "" and triangle["angles"]["a"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["b"])/ float(triangle["sites"]["a"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["b"])/ float(triangle["sites"]["a"]) <= 1:
             triangle["angles"]["b"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["b"])/ float(triangle["sites"]["a"])))), ROUND_INDICATOR)
             triangle["angles"]["c"] = round(180 - (float(triangle["angles"]["b"]) + float(triangle["angles"]["a"])), ROUND_INDICATOR)
-            triangle["sites"]["c"] = round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(float(triangle["angles"]["c"])), ROUND_INDICATOR)
+            triangle["sites"]["c"] = round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["c"]))), ROUND_INDICATOR)
             if float(triangle["angles"]["a"]) < 90 and float(triangle["sites"]["a"]) < float(triangle["sites"]["b"]):
                 angleb = round(180 - float(triangle["angles"]["b"]), ROUND_INDICATOR)
                 anglec = round(180 - (angleb + float["angles"]["a"]), ROUND_INDICATOR)
@@ -75,7 +75,7 @@ def getTriangleSSA(triangle):
         if sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["b"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["b"]) <= 1:
             triangle["angles"]["a"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["a"])) / float(triangle["sites"]["b"]))), ROUND_INDICATOR)
             triangle["angles"]["c"] = round(180 - (float(triangle["angles"]["b"]) + float(triangle["angles"]["a"])), ROUND_INDICATOR)
-            triangle["sites"]["c"] = round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(float(triangle["angles"]["c"])), ROUND_INDICATOR)
+            triangle["sites"]["c"] = round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["c"]))), ROUND_INDICATOR)
             if float(triangle["angles"]["b"]) < 90 and float(triangle["sites"]["b"]) < float(triangle["sites"]["a"]):
                 anglea = round(180 - float(triangle["angles"]["a"]), ROUND_INDICATOR)
                 anglec = round(180 - (anglea + float(triangle["angles"]["b"])), ROUND_INDICATOR)
@@ -91,7 +91,7 @@ def getTriangleSSA(triangle):
         if sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["c"]) / float(triangle["sites"]["a"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["c"])/ float(triangle["sites"]["a"]) <= 1:
             triangle["angles"]["c"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["c"])) / float(triangle["sites"]["a"]))), ROUND_INDICATOR)
             triangle["angles"]["b"] = round(180 - (float(triangle["angles"]["c"]) + float(triangle["angles"]["a"])), ROUND_INDICATOR)
-            triangle["sites"]["b"] =  round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(float(triangle["angles"]["b"])), ROUND_INDICATOR)
+            triangle["sites"]["b"] =  round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["b"]))), ROUND_INDICATOR)
             if float(triangle["angles"]["a"]) < 90 and float(triangle["sites"]["a"]) < float(triangle["sites"]["c"]):
                 anglec = round(180 - float(triangle["angles"]["c"]), ROUND_INDICATOR)
                 angleb = round(180 - (anglec + float(triangle["angles"]["a"])), ROUND_INDICATOR)
@@ -107,7 +107,7 @@ def getTriangleSSA(triangle):
         if sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["c"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["c"]) <= 1:
             triangle["angles"]["a"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["a"])) / float(triangle["sites"]["c"]))), ROUND_INDICATOR)
             triangle["angles"]["b"] = round(180 - (float(triangle["angles"]["c"]) + float(triangle["angles"]["a"])), ROUND_INDICATOR)
-            triangle["sites"]["b"] =  round(float(triangle["sites"]["a"]) / sin(float(triangle["angles"]["a"])) * sin(float(triangle["angles"]["b"])), ROUND_INDICATOR)
+            triangle["sites"]["b"] =  round(float(triangle["sites"]["a"]) / sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["b"]))), ROUND_INDICATOR)
             if float(triangle["angles"]["c"]) < 90 and float(triangle["sites"]["c"]) < float(triangle["sites"]["a"]):
                 anglea = round(180 - float(triangle["angles"]["a"]), ROUND_INDICATOR)
                 angleb = round(180 - (anglea + float(triangle["angles"]["c"])), ROUND_INDICATOR)
@@ -123,7 +123,7 @@ def getTriangleSSA(triangle):
         if sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"]) / float(triangle["sites"]["b"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"])/ float(triangle["sites"]["b"]) <= 1:
             triangle["angles"]["c"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"])) / float(triangle["sites"]["b"]))), ROUND_INDICATOR)
             triangle["angles"]["a"] = round(180 - (float(triangle["angles"]["b"]) + float(triangle["angles"]["c"])), ROUND_INDICATOR)
-            triangle["sites"]["a"] = round(float(triangle["sites"]["c"]) / sin(float(triangle["angles"]["c"])) * sin(float(triangle["angles"]["a"])), ROUND_INDICATOR)
+            triangle["sites"]["a"] = round(float(triangle["sites"]["c"]) / sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["a"]))), ROUND_INDICATOR)
             if float(triangle["angles"]["b"]) < 90 and float(triangle["sites"]["b"]) < float(triangle["sites"]["c"]):
                 anglec = round(180 - float(triangle["angles"]["c"]), ROUND_INDICATOR)
                 anglea = round(180 - (anglec + float(triangle["angles"]["b"])), ROUND_INDICATOR)
@@ -139,7 +139,7 @@ def getTriangleSSA(triangle):
         if sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"]) / float(triangle["sites"]["c"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"])/ float(triangle["sites"]["c"]) <= 1:
             triangle["angles"]["b"] = round(getDegreesFromRadian(asin((sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"])) / float(triangle["sites"]["c"]))), ROUND_INDICATOR)
             triangle["angles"]["a"] = round(180 - (float(triangle["angles"]["c"]) + float(triangle["angles"]["b"])), ROUND_INDICATOR)
-            triangle["sites"]["a"] = round(float(triangle["sites"]["c"]) / sin(float(triangle["angles"]["c"])) * sin(float(triangle["angles"]["a"])), ROUND_INDICATOR)
+            triangle["sites"]["a"] = round(float(triangle["sites"]["c"]) / sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * sin(getRadianFromDegrees(float(triangle["angles"]["a"]))), ROUND_INDICATOR)
             if float(triangle["angles"]["c"]) < 90 and float(triangle["sites"]["c"]) < float(triangle["sites"]["b"]):
                 angleb = round(180 - float(triangle["angles"]["b"]), ROUND_INDICATOR)
                 anglea = round(180 - (angleb + float(triangle["angles"]["c"])), ROUND_INDICATOR)
