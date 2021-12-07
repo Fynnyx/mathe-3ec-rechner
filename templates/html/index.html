@@ -29,18 +29,39 @@
                 <div class="col-sm-2"></div>
 
                 <!--Den benutzten von equilateral, obtuse-angled, acute-angled oder right_angled abfüllen-->
-                <div class="col-sm-3 text-left">
-                    <p id="equilateral">gleichschenklig</p>
-                    <p id="obtuse-angled"></p>
-                    <p id="acute-angled"></p>
-                    <p id="right_angled">rechtwinklig</p>
-                </div>
+                {% if two_solutions == True %}
+                    <div class="col-sm-3 text-left">
+                        <p><b>Eigenschaften 1.</b></p>
+                        <p id="equilateral"></p>
+                        <p id="obtuse-angled"></p>
+                        <p id="acute-angled"></p>
+                        <p id="right_angled"></p>
+                    </div>
+
+                    <div class="col-sm-3 text-left">
+                        <p><b>Eigenschaften 2.</b></p>
+                        <p id="equilateral2"></p>
+                        <p id="obtuse-angled2"></p>
+                        <p id="acute-angled2"></p>
+                        <p id="right_angled2"></p>
+                    </div>
+                {% else %}
+                    <div class="col-sm-3 text-left">
+                        <p><b>Eigenschaften</b></p>
+                        <p id="equilateral1"></p>
+                        <p id="obtuse-angled1"></p>
+                        <p id="acute-angled1"></p>
+                        <p id="right_angled1"></p>
+                    </div>
+                {% endif %}
 
                 <div class="col-sm-3 text-left">
+                    <p><b>Höhe</b></p>
                     <p id="height"></p>
                 </div>
 
                 <div class="col-sm-3 text-left">
+                    <p><b>Fläche</b></p>
                     <p id="area"></p>
                 </div>
             </div>

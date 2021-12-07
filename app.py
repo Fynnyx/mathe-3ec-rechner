@@ -209,45 +209,78 @@ def has_info(triangle):
 
 
 @app.route("/")
-def home(site_a = "", site_b = "", site_c = "", angle_a = "", angle_b = "", angle_c = "", right_angled = False, isosceles =  False, equilateral = False, height = "", area = "" ):
-    return render_template("html/index.html", site_a = site_a, site_b = site_b, site_c = site_c, angle_a = angle_a, angle_b = angle_b, angle_c = angle_c, area = area)
+def home(site_a = "", site_b = "", site_c = "", angle_a = "", angle_b = "", angle_c = "", right_angled = False, isosceles =  False, equilateral = False, height = "", area = "", two_solutions = "" ):
+    return render_template("html/index.html", site_a = site_a, site_b = site_b, site_c = site_c, angle_a = angle_a, angle_b = angle_b, angle_c = angle_c, area = area, two_solutions=two_solutions)
 
 @app.route("/form", methods=['POST'])
 def recive_form():
     # try:
     global triangle
-    triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
+    triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"two_solutions": False, "right_angled": False, "isosceles": False, "equilateral": False, "height": 0, "area": 0}}
     print("Got Data: ", triangle)
 
     if checkForNegatives(triangle) != True or checkForAnglesMore180(triangle["angles"]) != True :
 
         triangle = has_info(triangle)
 
-        # ob das rechteck RECHTWINKLIG ist
-        print(triangle)
+        # ob das dreieck mehrere lösungen hat
+        has_two_solutions = False
         for angle in triangle["angles"]:
-            if " oder " in str(triangle["angles"][angle]):
-                angle_var = triangle["angles"][angle].split(" oder ")
-            else:
-                angle_var = [triangle["angles"][angle]]
-            for a in angle_var:
-                if float(a) == 90:
-                    triangle["properties"]["right_angled"] = True
+            if "oder" in str(triangle["angles"][angle]):
+                has_two_solutions = True
+                triangle["properties"]["two_solutions"] = True
 
+        # ob das dreieck RECHTWINKLIG ist
         print(triangle)
-        #
-        # # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
-        # if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
-        #     triangle["properties"]["isosceles"] = True
-        #
-        # # ob das dreieck GLEICHSEITIG ist
-        # if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
-        #     triangle["properties"]["equilateral"] = True
-        # # except ValueError as e:
-        # #     print("Value missing or not a number")
-        # #     print("Error: ", e)
-        # # finally:
-        # #     print(triangle)
+        if has_two_solutions == True:
+            angle1 = False
+            angle2 = False
+            for angle in triangle["angles"]:
+                angle_var = triangle["angles"][angle].split("oder")
+                if len(angle_var) == 2:
+                    if float(angle_var[0]) == 90:
+                        angle1 = True
+                    if float(angle_var[1]) == 90:
+                        angle2 = True
+
+                    triangle["properties"]["right_angled"] = str(angle1) + " oder " + str(angle2)
+                else:
+                    if float(angle_var[0]) == 90:
+                        triangle["properties"]["right_angled"] = "True oder True"
+        else:
+            for angle in triangle["angles"]:
+                if float(triangle["angles"][angle]) == 90:
+                    triangle["properties"]["right_angled"] = "True"
+            # if " oder " in str(triangle["angles"][angle]):
+            #     angle_var = triangle["angles"][angle].split(" oder ")
+            # else:
+            #     angle_var = [triangle["angles"][angle]]
+            #
+            # if len(angle_var) == 2:
+            #     if float(angle_var[0]) == 90:
+            #         angle2 = True
+            #     if float(angle_var[1]) == 90:
+            #         angle2 = True
+            #     triangle["properties"]["right_angled"] = str(angle1) + " oder " + str(angle2)
+            #
+            # elif len(angle_var) == 1:
+            #     triangle["properties"]["right_angled"] = True
+            #
+            # else:
+            #     triangle["properties"]["right_angled"] = False
+
+        # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
+        if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
+            triangle["properties"]["isosceles"] = True
+
+        # ob das dreieck GLEICHSEITIG ist
+        if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
+            triangle["properties"]["equilateral"] = True
+        # except ValueError as e:
+        #     print("Value missing or not a number")
+        #     print("Error: ", e)
+        # finally:
+        #     print(triangle)
 
         return render_template("./html/index.html", site_a = triangle["sites"]["a"],
                         site_b=triangle["sites"]["b"],
@@ -259,7 +292,8 @@ def recive_form():
                         isosceles = triangle["properties"]["isosceles"],
                         equilateral = triangle["properties"]["equilateral"],
                         height = triangle["properties"]["height"],
-                        area = triangle["properties"]["area"]
+                        area = triangle["properties"]["area"],
+                        two_solutions = triangle["properties"]["two_solutions"]
                         )
     else:
         return redirect(url_for("home"))
