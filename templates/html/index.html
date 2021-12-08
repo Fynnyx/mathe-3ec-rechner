@@ -20,6 +20,20 @@
         </header>
     </div>
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+
+
     <form action="{{ url_for('recive_form') }}" method='POST'>
 
         <div class="container">
@@ -38,7 +52,7 @@
                         <p id="equilateral1">gleichseitig</p>
                     {% endif %}
                     {% if iso[0] == "True" %}
-                        <p id="isosceles_angled1">gleichwinklig</p>
+                        <p id="isosceles_angled1">gleichschenklig</p>
                     {% endif %}
                     {% if right[0] == "True" %}
                         <p id="right_angled1">rechtwinklig</p>
@@ -50,7 +64,7 @@
                         <p id="equilateral2">gleichseitig</p>
                     {% endif %}
                     {% if iso[1] == "True" %}
-                        <p id="isosceles_angled2">gleichwinklig</p>
+                        <p id="isosceles_angled2">gleichschenklig</p>
                     {% endif %}
                     {% if right[1] == "True" %}
                         <p id="right_angled2">rechtwinklig</p>
@@ -58,11 +72,11 @@
                 {% else %}
                 <div class="col-sm-3 text-center">
                     <p><b>Eigenschaften</b></p>
-                    {% if equiliteral == "True" %}
+                    {% if equilateral == "True" %}
                         <p id="equilateral">gleichseitig</p>
                     {% endif %}
                     {% if isosceles == "True" %}
-                        <p id="isosceles_angled">gleichwinklig</p>
+                        <p id="isosceles_angled">gleichschenklig</p>
                     {% endif %}
                     {% if right_angled == "True" %}
                         <p id="right_angled">rechtwinklig</p>

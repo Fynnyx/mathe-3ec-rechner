@@ -2,8 +2,13 @@ from flask import Flask, request, render_template, redirect, url_for, flash
 from math import acos, cos, sin, asin, pi, sqrt
 
 app = Flask(__name__)
+app.secret_key = "triangle"
 
 ROUND_INDICATOR = 2
+
+def sendErrors(error):
+    flash(error)
+    return redirect(url_for("home"))
 
 def getAmountEntries(triangle, what:str):
     amount = 0
@@ -68,8 +73,8 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["c"] = str(triangle["angles"]["c"]) + " oder " + str(anglec)
                 triangle["sites"]["c"] = str(triangle["sites"]["c"]) +  " oder " + str(sitec)
         else:
-            # Return Error
-            print("not Possible")
+            flash("This triangle is not calculable")
+
 
     elif triangle["sites"]["a"] != "" and triangle["sites"]["b"] != "" and triangle["angles"]["b"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["b"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["b"]) <= 1:
@@ -84,8 +89,8 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["c"] = str(triangle["angles"]["c"]) + " oder " + str(anglec)
                 triangle["sites"]["c"] = str(triangle["sites"]["c"]) + " oder " + str(sitec)
         else:
-            # Return Error
-            print("not Possible")
+            flash("This triangle is not calculable")
+
 
     elif triangle["sites"]["a"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["a"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["c"]) / float(triangle["sites"]["a"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["a"]))) * float(triangle["sites"]["c"])/ float(triangle["sites"]["a"]) <= 1:
@@ -100,8 +105,8 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["sites"]["b"] = str(triangle["sites"]["b"]) + " oder " + str(siteb)
         else:
-            # Return Error
-            print("not Possible")
+            flash("This triangle is not calculable")
+
 
     elif triangle["sites"]["a"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["c"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["c"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["a"])/ float(triangle["sites"]["c"]) <= 1:
@@ -116,8 +121,8 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["b"] = str(triangle["angles"]["b"]) + " oder " + str(angleb)
                 triangle["sites"]["b"] = str(triangle["sites"]["b"]) + " oder " + str(siteb)
         else:
-            # Return Error
-            print("not Possible")
+            flash("This triangle is not calculable")
+
 
     elif triangle["sites"]["b"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["b"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"]) / float(triangle["sites"]["b"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["b"]))) * float(triangle["sites"]["c"])/ float(triangle["sites"]["b"]) <= 1:
@@ -132,8 +137,8 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["sites"]["a"] = str(triangle["sites"]["a"]) + " oder " + str(sitea)
         else:
-            # Return Error
-            print("not Possible")
+            flash("This triangle is not calculable")
+
 
     elif triangle["sites"]["b"] != "" and triangle["sites"]["c"] != "" and triangle["angles"]["c"] != "":
         if sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"]) / float(triangle["sites"]["c"]) >= -1 and sin(getRadianFromDegrees(float(triangle["angles"]["c"]))) * float(triangle["sites"]["b"])/ float(triangle["sites"]["c"]) <= 1:
@@ -148,8 +153,8 @@ def getTriangleSSA(triangle):
                 triangle["angles"]["a"] = str(triangle["angles"]["a"]) + " oder " + str(anglea)
                 triangle["sites"]["a"] = str(triangle["sites"]["a"]) + " oder " + str(sitea)
         else:
-            # Return Error
-            print("not Possible")
+            flash("This triangle is not calculable")
+
     return triangle
 
 
@@ -187,8 +192,7 @@ def getTriangleSSS(sa, sb, sc, triangle):
             triangle["angles"]["a"] = round((acos((float(sb)**2 + float(sc)**2 - float(sa)**2) / (2 * float(sb) * float(sc)))) / pi * 180, ROUND_INDICATOR)
         return triangle
     else:
-        # Return Error
-        print("Keine Lösung")
+        flash("This triangle is not calculable")
 
 
 def has_info(triangle):
@@ -203,8 +207,8 @@ def has_info(triangle):
     elif sites_amount == 3 and angle_amount == 0:
         triangle = getTriangleSSS(triangle["sites"]["a"], triangle["sites"]["b"], triangle["sites"]["c"], triangle)
     else:
-        # Return Error
-        print("6")
+        flash("Please insert only 3 values.")
+        return redirect(url_for("home"))
     return triangle
 
 
@@ -214,90 +218,156 @@ def home(site_a = "", site_b = "", site_c = "", angle_a = "", angle_b = "", angl
 
 @app.route("/form", methods=['POST'])
 def recive_form():
-    # try:
-    global triangle
-    triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"two_solutions": False, "right_angled": "False", "isosceles": "False", "equilateral": "False", "height": 0, "area": 0}}
-    print("Got Data: ", triangle)
+    try:
+        global triangle
+        triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"two_solutions": False, "right_angled": "False", "isosceles": "False", "equilateral": "False", "height": 0, "area": 0}}
+        print("Got Data: ", triangle)
 
-    if checkForNegatives(triangle) != True or checkForAnglesMore180(triangle["angles"]) != True :
+        if checkForNegatives(triangle) != True or checkForAnglesMore180(triangle["angles"]) != True :
 
-        triangle = has_info(triangle)
+            triangle = has_info(triangle)
 
-        # ob das dreieck mehrere lösungen hat
-        has_two_solutions = False
-        for angle in triangle["angles"]:
-            if "oder" in str(triangle["angles"][angle]):
-                has_two_solutions = True
-                triangle["properties"]["two_solutions"] = True
+            print("After calculation: ", triangle)
 
-        # ob das dreieck RECHTWINKLIG ist
-        print(triangle)
-        if has_two_solutions == True:
-            angle1 = False
-            angle2 = False
+            # ob das dreieck mehrere lösungen hat
+            has_two_solutions = False
             for angle in triangle["angles"]:
-                angle_var = triangle["angles"][angle].split("oder")
-                if len(angle_var) == 2:
-                    if float(angle_var[0]) == 90:
-                        angle1 = True
-                    if float(angle_var[1]) == 90:
-                        angle2 = True
+                if "oder" in str(triangle["angles"][angle]):
+                    has_two_solutions = True
+                    triangle["properties"]["two_solutions"] = True
 
-                    triangle["properties"]["right_angled"] = str(angle1) + " oder " + str(angle2)
+            # ob das dreieck RECHTWINKLIG ist
+            if has_two_solutions == True:
+                angle1 = False
+                angle2 = False
+                for angle in triangle["angles"]:
+                    angle_var = triangle["angles"][angle].split("oder")
+                    if len(angle_var) == 2:
+                        if float(angle_var[0]) == 90:
+                            angle1 = True
+                        if float(angle_var[1]) == 90:
+                            angle2 = True
+
+                        triangle["properties"]["right_angled"] = str(angle1) + " oder " + str(angle2)
+                    else:
+                        if float(angle_var[0]) == 90:
+                            triangle["properties"]["right_angled"] = "True oder True"
+            else:
+                for angle in triangle["angles"]:
+                    if float(triangle["angles"][angle]) == 90:
+                        triangle["properties"]["right_angled"] = "True"
+
+            # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
+            if has_two_solutions == True:
+                a = str(triangle["angles"]["a"]).split(" oder ")
+                b = str(triangle["angles"]["b"]).split(" oder ")
+                c = str(triangle["angles"]["c"]).split(" oder ")
+
+                first = []
+                second = []
+
+                first_bool = "False"
+                second_bool = "False"
+
+                if len(a) == 1:
+                    first.append(a[0])
+                    second.append(a[0])
                 else:
-                    if float(angle_var[0]) == 90:
-                        triangle["properties"]["right_angled"] = "True oder True"
+                    first.append(a[0])
+                    second.append(a[1])
+
+                if len(b) == 1:
+                    first.append(b[0])
+                    second.append(b[0])
+                else:
+                    first.append(b[0])
+                    second.append(b[1])
+
+                if len(c) == 1:
+                    first.append(c[0])
+                    second.append(c[0])
+                else:
+                    first.append(c[0])
+                    second.append(c[1])
+
+                if float(first[0]) == float(first[1]) or float(first[0]) == float(first[2]) or float(first[1]) == float(first[2]):
+                    first_bool = "True"
+                if float(second[0]) == float(second[1]) or float(second[0]) == float(second[2]) or float(second[1]) == float(second[2]):
+                    second_bool = "True"
+
+                triangle["properties"]["isosceles"] = first_bool + " oder " + second_bool
+            else:
+                if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
+                    triangle["properties"]["isosceles"] = "True"
+
+            # ob das dreieck GLEICHSEITIG ist
+            if has_two_solutions == True:
+                a = str(triangle["sites"]["a"]).split(" oder ")
+                b = str(triangle["sites"]["b"]).split(" oder ")
+                c = str(triangle["sites"]["c"]).split(" oder ")
+
+                first = []
+                second = []
+
+                first_bool = "False"
+                second_bool = "False"
+
+                if len(a) == 1:
+                    first.append(a[0])
+                    second.append(a[0])
+                else:
+                    first.append(a[0])
+                    second.append(a[1])
+
+                if len(b) == 1:
+                    first.append(b[0])
+                    second.append(b[0])
+                else:
+                    first.append(b[0])
+                    second.append(b[1])
+
+                if len(c) == 1:
+                    first.append(c[0])
+                    second.append(c[0])
+                else:
+                    first.append(c[0])
+                    second.append(c[1])
+
+                if first[0] == first[1] or first[0] == first[2] or first[1] == first[2]:
+                    first_bool = "True"
+                if second[0] == second[1] or second[0] == second[2] or second[1] == second[2]:
+                    second_bool = "True"
+
+                triangle["properties"]["equilateral"] = first_bool + " oder " + second_bool
+            else:
+                if float(triangle["sites"]["a"]) == float(triangle["sites"]["b"]) == float(triangle["sites"]["c"]):
+                    triangle["properties"]["equilateral"] = "True"
+
+            return render_template("./html/index.html",
+                            site_a = triangle["sites"]["a"],
+                            site_b=triangle["sites"]["b"],
+                            site_c=triangle["sites"]["c"],
+                            angle_a=triangle["angles"]["a"],
+                            angle_b=triangle["angles"]["b"],
+                            angle_c=triangle["angles"]["c"],
+                            right_angled = triangle["properties"]["right_angled"],
+                            isosceles = triangle["properties"]["isosceles"],
+                            equilateral = triangle["properties"]["equilateral"],
+                            height = triangle["properties"]["height"],
+                            area = triangle["properties"]["area"],
+                            two_solutions = triangle["properties"]["two_solutions"]
+                            )
         else:
-            for angle in triangle["angles"]:
-                if float(triangle["angles"][angle]) == 90:
-                    triangle["properties"]["right_angled"] = "True"
-            # if " oder " in str(triangle["angles"][angle]):
-            #     angle_var = triangle["angles"][angle].split(" oder ")
-            # else:
-            #     angle_var = [triangle["angles"][angle]]
-            #
-            # if len(angle_var) == 2:
-            #     if float(angle_var[0]) == 90:
-            #         angle2 = True
-            #     if float(angle_var[1]) == 90:
-            #         angle2 = True
-            #     triangle["properties"]["right_angled"] = str(angle1) + " oder " + str(angle2)
-            #
-            # elif len(angle_var) == 1:
-            #     triangle["properties"]["right_angled"] = True
-            #
-            # else:
-            #     triangle["properties"]["right_angled"] = False
-
-        # ob das dreieck GLEICHSCHENKLIG ist mit winkeln
-        if triangle["angles"]["a"] == triangle["angles"]["b"] or triangle["angles"]["a"] == triangle["angles"]["c"] or triangle["angles"]["b"] == triangle["angles"]["c"]:
-            triangle["properties"]["isosceles"] = "True"
-
-        # ob das dreieck GLEICHSEITIG ist
-        if triangle["sites"]["a"] == triangle["sites"]["b"] == triangle["sites"]["c"]:
-            triangle["properties"]["equilateral"] = "True"
-        # except ValueError as e:
-        #     print("Value missing or not a number")
-        #     print("Error: ", e)
-        # finally:
-        #     print(triangle)
-
-        return render_template("./html/index.html",
-                        site_a = triangle["sites"]["a"],
-                        site_b=triangle["sites"]["b"],
-                        site_c=triangle["sites"]["c"],
-                        angle_a=triangle["angles"]["a"],
-                        angle_b=triangle["angles"]["b"],
-                        angle_c=triangle["angles"]["c"],
-                        right_angled = triangle["properties"]["right_angled"],
-                        isosceles = triangle["properties"]["isosceles"],
-                        equilateral = triangle["properties"]["equilateral"],
-                        height = triangle["properties"]["height"],
-                        area = triangle["properties"]["area"],
-                        two_solutions = triangle["properties"]["two_solutions"]
-                        )
-    else:
+            return redirect(url_for("home"))
+    except ValueError as e:
+        flash("Value missing or not a number")
+        print("Error: ", e)
+    except TypeError as e:
+        # flash("Only insert 3 values.")
+        # print("Error: ", e)
         return redirect(url_for("home"))
+    finally:
+        print("Final: ", triangle)
 
 if __name__ == "__main__":
     app.run()
