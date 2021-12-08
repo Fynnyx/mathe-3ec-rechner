@@ -360,10 +360,17 @@ def recive_form():
         else:
             return redirect(url_for("home"))
     except ValueError as e:
-        flash("Value missing or not a number")
+        if "could not convert string to float" in str(e):
+            flash("Not a number")
+        else:
+            flash("Value missing or not a number")
         print("Error: ", e)
+        return redirect(url_for("home"))
     except TypeError as e:
         # flash("Only insert 3 values.")
+        if "could not convert string to float" in str(e):
+            print("test")
+            flash("Not a number")
         # print("Error: ", e)
         return redirect(url_for("home"))
     finally:
