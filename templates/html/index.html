@@ -57,8 +57,7 @@
                     {% if right[0] == "True" %}
                         <p id="right_angled1">rechtwinklig</p>
                     {% endif %}
-                </div>
-
+                
                 <p><b>Eigenschaften 2.</b></p>
                     {% if equ[1] == "True" %}
                         <p id="equilateral2">gleichseitig</p>
@@ -70,7 +69,9 @@
                         <p id="right_angled2">rechtwinklig</p>
                     {% endif %}
                 {% else %}
-                <div class="col-sm-3 text-center">
+            </div>
+
+                <div class="col-sm-12 text-center">
                     <p><b>Eigenschaften</b></p>
                     {% if equilateral == "True" %}
                         <p id="equilateral">gleichseitig</p>
