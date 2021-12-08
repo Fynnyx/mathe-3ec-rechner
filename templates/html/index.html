@@ -21,15 +21,15 @@
     </div>
 
     {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-                <div class="alert alert-danger" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </ul>
-      {% endif %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% endwith %}
 
 
@@ -43,44 +43,46 @@
 
                 <!--Den benutzten von equilateral, obtuse-angled, acute-angled oder right_angled abfüllen-->
                 {% if two_solutions == True %}
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-6 text-center">
                     {% set equ = equilateral.split(" oder ") %}
                     {% set iso = isosceles.split(" oder ") %}
                     {% set right = right_angled.split(" oder ") %}
                     <p><b>Eigenschaften 1.</b></p>
                     {% if equ[0] == "True" %}
-                        <p id="equilateral1">gleichseitig</p>
+                    <p id="equilateral1">gleichseitig</p>
                     {% endif %}
                     {% if iso[0] == "True" %}
-                        <p id="isosceles_angled1">gleichschenklig</p>
+                    <p id="isosceles_angled1">gleichschenklig</p>
                     {% endif %}
                     {% if right[0] == "True" %}
-                        <p id="right_angled1">rechtwinklig</p>
+                    <p id="right_angled1">rechtwinklig</p>
                     {% endif %}
-                
-                <p><b>Eigenschaften 2.</b></p>
+                </div>
+
+                <div class="col-sm-6 text-center">
+                    <p><b>Eigenschaften 2.</b></p>
                     {% if equ[1] == "True" %}
-                        <p id="equilateral2">gleichseitig</p>
+                    <p id="equilateral2">gleichseitig</p>
                     {% endif %}
                     {% if iso[1] == "True" %}
-                        <p id="isosceles_angled2">gleichschenklig</p>
+                    <p id="isosceles_angled2">gleichschenklig</p>
                     {% endif %}
                     {% if right[1] == "True" %}
-                        <p id="right_angled2">rechtwinklig</p>
+                    <p id="right_angled2">rechtwinklig</p>
                     {% endif %}
+                </div>
                 {% else %}
-            </div>
 
                 <div class="col-sm-12 text-center">
                     <p><b>Eigenschaften</b></p>
                     {% if equilateral == "True" %}
-                        <p id="equilateral">gleichseitig</p>
+                    <p id="equilateral">gleichseitig</p>
                     {% endif %}
                     {% if isosceles == "True" %}
-                        <p id="isosceles_angled">gleichschenklig</p>
+                    <p id="isosceles_angled">gleichschenklig</p>
                     {% endif %}
                     {% if right_angled == "True" %}
-                        <p id="right_angled">rechtwinklig</p>
+                    <p id="right_angled">rechtwinklig</p>
                     {% endif %}
                 </div>
                 {% endif %}
