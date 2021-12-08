@@ -30,24 +30,43 @@
                 <!--Den benutzten von equilateral, obtuse-angled, acute-angled oder right_angled abfüllen-->
                 {% if two_solutions == True %}
                 <div class="col-sm-12 text-center">
+                    {% set equ = equilateral.split(" oder ") %}
+                    {% set iso = isosceles.split(" oder ") %}
+                    {% set right = right_angled.split(" oder ") %}
                     <p><b>Eigenschaften 1.</b></p>
-                    <p id="equilateral"></p>
-                    <p id="isosceles_angled"></p>
-                    <p id="right_angled"></p>
+                    {% if equ[0] == "True" %}
+                        <p id="equilateral1">gleichseitig</p>
+                    {% endif %}
+                    {% if iso[0] == "True" %}
+                        <p id="isosceles_angled1">gleichwinklig</p>
+                    {% endif %}
+                    {% if right[0] == "True" %}
+                        <p id="right_angled1">rechtwinklig</p>
+                    {% endif %}
                 </div>
 
-                <div class="col-sm-3 text-center">
-                    <p><b>Eigenschaften 2.</b></p>
-                    <p id="equilateral2"></p>
-                    <p id="isosceles_angled2"></p>
-                    <p id="right_angled2"></p>
-                </div>
+                <p><b>Eigenschaften 2.</b></p>
+                    {% if equ[1] == "True" %}
+                        <p id="equilateral2">gleichseitig</p>
+                    {% endif %}
+                    {% if iso[1] == "True" %}
+                        <p id="isosceles_angled2">gleichwinklig</p>
+                    {% endif %}
+                    {% if right[1] == "True" %}
+                        <p id="right_angled2">rechtwinklig</p>
+                    {% endif %}
                 {% else %}
                 <div class="col-sm-3 text-center">
                     <p><b>Eigenschaften</b></p>
-                    <p id="equilateral1"></p>
-                    <p id="isosceles_angled1"></p>
-                    <p id="right_angled1"></p>
+                    {% if equiliteral == "True" %}
+                        <p id="equilateral">gleichseitig</p>
+                    {% endif %}
+                    {% if isosceles == "True" %}
+                        <p id="isosceles_angled">gleichwinklig</p>
+                    {% endif %}
+                    {% if right_angled == "True" %}
+                        <p id="right_angled">rechtwinklig</p>
+                    {% endif %}
                 </div>
                 {% endif %}
 
