@@ -50,7 +50,7 @@ p {
 }
 
 /*Design für stumpfwinkliges Dreieck*/
-#stumpfwinklig {
+#gleichschenklig {
     z-index: -1;
     position: absolute;
     transform: translateX(-50%);
@@ -61,21 +61,6 @@ p {
     border-right: 200px solid transparent;
     border-bottom: 200px solid green;                /*höhe*/
     display: inline-block;
-}
-
-/*Design für spitzwinkliges Dreieck*/
-#spitzwinklig {
-    z-index: -1;
-    transform: translateX(-50%);
-    transform: translateY(-50%);
-    position: absolute;
-    top: 50%;
-    left: 30%;
-    width: 0;
-    height: 0;
-    border-left: 90px solid transparent;
-    border-right: 90px solid transparent;
-    border-bottom: 280px solid green;
 }
 
 /*Design für rechtwinkliges Dreieck*/
