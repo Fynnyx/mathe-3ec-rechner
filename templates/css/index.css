@@ -1,0 +1,77 @@
+/*Design für Inputs*/
+input {
+    border-radius: 20px;
+}
+
+/*Design für Buttons*/
+button {
+    border-radius: 20px;
+}
+
+/*Design für a*/
+a {
+    color: black;
+    text-decoration: inherit;
+}
+
+/*Design für a:hover (z.B. mit Maus über Link wischen)*/
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+/*Design für Paragraph(<p>)*/
+p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/*Design für Output*/
+#output {
+    text-align: center;
+    position: absolute;
+    left: 27%;
+    top: 200%;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+/*Design für gleichseitiges Dreieck*/
+#gleichseitig {
+    z-index: -1;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 14%; 
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: calc(2 * 150px * 0.866) solid green;
+}
+
+/*Design für stumpfwinkliges Dreieck*/
+#gleichschenklig {
+    z-index: -1;
+    position: absolute;
+    transform: translateX(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    left: 1%;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-bottom: 200px solid green;                /*höhe*/
+    display: inline-block;
+}
+
+/*Design für rechtwinkliges Dreieck*/
+#rechtwinklig {
+    z-index: -1;
+    transform: translateX(-50%);
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(to bottom right, #fff 0%, #fff 50%, green 50%, green 100%);
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Geometierechner</title>
+
+</head>
+
+<body>
+
+    <div class="jumbotron text-center">
+        <header>
+            <h1 id="title">Mathe Geometierechner</h1>
+        </header>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+
+
+    <form action="{{ url_for('recive_form') }}" method='POST'>
+
+        <div class="container">
+
+            <!--Zeile für Ausgabefelder-->
+            <div class="row">
+
+                <!--Den benutzten von equilateral, obtuse-angled, acute-angled oder right_angled abfüllen-->
+                {% if two_solutions == True %}
+                <div class="col-sm-6 text-center">
+                    {% set equ = equilateral.split(" oder ") %}
+                    {% set iso = isosceles.split(" oder ") %}
+                    {% set right = right_angled.split(" oder ") %}
+                    <p><b>Eigenschaften 1.</b></p>
+                    {% if equ[0] == "True" %}
+                    <p id="equilateral1">gleichseitig</p>
+                    {% endif %}
+                    {% if iso[0] == "True" %}
+                    <p id="isosceles_angled1">gleichschenklig</p>
+                    {% endif %}
+                    {% if right[0] == "True" %}
+                    <p id="right_angled1">rechtwinklig</p>
+                    {% endif %}
+                </div>
+
+                <div class="col-sm-6 text-center">
+                    <p><b>Eigenschaften 2.</b></p>
+                    {% if equ[1] == "True" %}
+                    <p id="equilateral2">gleichseitig</p>
+                    {% endif %}
+                    {% if iso[1] == "True" %}
+                    <p id="isosceles_angled2">gleichschenklig</p>
+                    {% endif %}
+                    {% if right[1] == "True" %}
+                    <p id="right_angled2">rechtwinklig</p>
+                    {% endif %}
+                </div>
+                {% else %}
+
+                <div class="col-sm-12 text-center">
+                    <p><b>Eigenschaften</b></p>
+                    {% if equilateral == "True" %}
+                    <p id="equilateral">gleichseitig</p>
+                    {% endif %}
+                    {% if isosceles == "True" %}
+                    <p id="isosceles_angled">gleichschenklig</p>
+                    {% endif %}
+                    {% if right_angled == "True" %}
+                    <p id="right_angled">rechtwinklig</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            </div>
+
+            <br />
+
+            <!--Zeile für Input und Output von Winkel C-->
+            <div class="row">
+                <div class="col-sm-5"></div>
+
+                <div class="col-sm-4">
+                    <input value="{{ angle_c }}" type="text" id="angle_c" name="angle_c" placeholder="Winkel C"><br>
+                </div>
+            </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br />
+
+            <!--Zeile für Input und Output von Seite A und B sowie die Ausgabe des Dreiecks-->
+            <div class="row">
+                <div class="col-sm-2"></div>
+
+                <div class="col-sm-2">
+                    <input value="{{ site_b }}" type="text" id="site_b" name="site_b" placeholder="Seite b"><br>
+                </div>
+
+                <div class="col-sm-4">
+                    <!--Nur das anzeigen, welches ausgegeben werden soll-->
+                    <div id="gleichseitig"></div>
+                    <div id="gleichschenklig"></div>
+                    <div id="rechtwinklig"></div>
+
+                </div>
+
+                <div class="col-sm-3">
+                    <input value="{{ site_a }}" type="text" id="site_a" name="site_a" placeholder="Seite a"><br>
+                </div>
+            </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br />
+
+            <!--Zeile für Input und Output von Winkel A, Winkel B und Seite C-->
+            <div class="row">
+                <div class="col-sm-5">
+                    <input value="{{ angle_a }}" type="text" id="angle_a" name="angle_a" placeholder="Winkel A"><br>
+                </div>
+
+                <div class="col-sm-5">
+                    <input value="{{ site_c }}" type="text" id="site_c" name="site_c" placeholder="Seite c"><br>
+                </div>
+
+                <div class="col-sm-2">
+                    <input value="{{ angle_b }}" type="text" id="angle_b" name="angle_b" placeholder="Winkel B"><br>
+                </div>
+            </div>
+
+            <br />
+
+            <!--Rechnen und Reset Button-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="submit">rechnen</button>
+                    <button type="reset"><a href="/">reset</a></button>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+    <br />
+
+    <div class="jumbotron text-center">
+        <footer>
+            <h2 id="create">Made by: Sandro Suter, Linus Aregger, Nico Menzi, Fynn Westerath, Tobias Bertschi</h2>
+        </footer>
+    </div>
+
+</body>
+
+</html>
