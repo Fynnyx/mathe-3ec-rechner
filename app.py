@@ -6,10 +6,6 @@ app.secret_key = "triangle"
 
 ROUND_INDICATOR = 2
 
-def sendErrors(error):
-    flash(error)
-    return redirect(url_for("home"))
-
 def getAmountEntries(triangle, what:str):
     amount = 0
     for x in triangle[what]:
