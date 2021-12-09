@@ -32,10 +32,16 @@ def checkForNegatives(triangle):
     return is_negativ
 
 def checkForAnglesMore180(angles):
+    value = 0
     for x in angles:
         if angles[x] != "":
+            value = value + float(angles[x])
             if float(angles[x]) > 180:
+                flash("One angle is more than 180°")
                 return True
+    if value >= 180:
+        flash("The angles are more than 180°")
+        return True
     return False
 
 
@@ -199,6 +205,7 @@ def has_info(triangle):
     sites_amount = getAmountEntries(triangle, "sites")
     angle_amount = getAmountEntries(triangle, "angles")
     if sites_amount == 3 and angle_amount == 3:
+        flash("You have inserted all values")
         return triangle
     elif sites_amount == 2 and angle_amount == 1:
         triangle = getTriangleSSA(triangle)
@@ -223,7 +230,7 @@ def recive_form():
         triangle = {"sites": {"a": request.form['site_a'], "b": request.form['site_b'], "c": request.form['site_c']}, "angles": {"a": request.form['angle_a'], "b": request.form['angle_b'], "c": request.form['angle_c']}, "properties": {"two_solutions": False, "right_angled": "False", "isosceles": "False", "equilateral": "False", "height": 0, "area": 0}}
         print("Got Data: ", triangle)
 
-        if checkForNegatives(triangle) != True or checkForAnglesMore180(triangle["angles"]) != True :
+        if checkForNegatives(triangle) != True and checkForAnglesMore180(triangle["angles"]) != True :
 
             triangle = has_info(triangle)
 
@@ -371,7 +378,7 @@ def recive_form():
         if "could not convert string to float" in str(e):
             print("test")
             flash("Not a number")
-        # print("Error: ", e)
+        print("Error: ", e)
         return redirect(url_for("home"))
     finally:
         print("Final: ", triangle)
